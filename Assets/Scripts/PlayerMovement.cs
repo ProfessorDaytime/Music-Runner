@@ -9,6 +9,11 @@ public class PlayerMovement : MonoBehaviour {
   public float forwardForce = 100f;
   public float sidewaysForce = 250f;
 
+  //Seth's movement
+  private float moveSpeed = 16f;
+  
+
+
 
   //Seth's Platform Generation
   private float spawnSpeed;
@@ -23,6 +28,7 @@ public class PlayerMovement : MonoBehaviour {
 
   [SerializeField]
   Transform firstObject;
+
 
   //End of Seth's Platform Generation
 
@@ -53,38 +59,51 @@ public class PlayerMovement : MonoBehaviour {
     GameObject _object = Instantiate (ground) as GameObject;
     _object.transform.position = lastPos + new Vector3 (0f, 0f, lengthinZaxis);
     lastPos = _object.transform.position;
-  
+
   }
 
 
   // Update is called once per frame
   // We use "Fixed"Update because we are using it to mess with phyiscs
-  void FixedUpdate ()
-  {
-    rb.AddForce(0, 0, forwardForce * Time.deltaTime); //adds force to z-axis
+  // void FixedUpdate ()
+  // {
+  //   rb.AddForce(0, 0, forwardForce * Time.deltaTime); //adds force to z-axis
+  //
+  //   if ( Input.GetKey("d") )
+  //   {
+  //     rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+  //   }
+  //
+  //   if (Input.GetKey("a"))
+  //   {
+  //     rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+  //   }
+  //
+  //
+  //   if (rb.position.y < -1f)
+  //   {
+  //     FindObjectOfType<GameManager>().EndGame();
+  //   }
+  //
+  //   //Seth's Ground Genearation
+  //   if(lastPos.z - transform.position.z < (horizon * lengthinZaxis)){
+  //     Spawning();
+  //   }
+  //
+  //
+  //
+  // }
 
-    if ( Input.GetKey("d") )
-    {
-      rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
-    }
-
-    if (Input.GetKey("a"))
-    {
-      rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
-    }
+  // Seth's Update is called once per frame
+	void Update () {
 
 
-    if (rb.position.y < -1f)
-    {
-      FindObjectOfType<GameManager>().EndGame();
-    }
+		transform.Translate (moveSpeed * Input.GetAxis ("Horizontal") * Time.deltaTime, 0f, moveSpeed * Time.deltaTime);
 
-    //Seth's Ground Genearation
-    if(lastPos.z - transform.position.z < (horizon * lengthinZaxis)){
-      Spawning();
-    }
+		//spawns new platforms if you get close to the horizon
+		if(lastPos.z - transform.position.z < (horizon * lengthinZaxis)){
+			Spawning();
+		}
+	}
 
-
-
-  }
 }

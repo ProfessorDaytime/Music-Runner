@@ -5,7 +5,6 @@ using UnityEngine;
 public class scr_Ground : MonoBehaviour {
 
 	private GameObject player;
-	private float playerOffset = 20f;
 
 	// Use this for initialization
 	void Start () {
