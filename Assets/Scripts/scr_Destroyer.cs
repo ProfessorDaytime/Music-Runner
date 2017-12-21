@@ -5,7 +5,7 @@ using UnityEngine;
 public class scr_Destroyer : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
-		Debug.Log("Destroy!!!");
+		//Debug.Log("Destroy!!!");
 
 		if(other.tag == "Player"){
 			Debug.Break();

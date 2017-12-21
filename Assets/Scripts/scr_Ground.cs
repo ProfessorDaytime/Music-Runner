@@ -11,7 +11,7 @@ public class scr_Ground : MonoBehaviour {
 		player = GameObject.Find("Player");
 
 		string s = string.Concat("Ground Created",transform.position.z);
-		Debug.Log(s);
+		//Debug.Log(s);
 		// print(Time.time);
 	}
 

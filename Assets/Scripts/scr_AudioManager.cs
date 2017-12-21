@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class scr_AudioManager : MonoBehaviour {
 
-	// [SerializeField]
-	public Sound[] sounds;
+
+	public Sound[] sounds = new Sound[37];
+
 
 	public static scr_AudioManager instance;
 
@@ -15,6 +16,7 @@ public class scr_AudioManager : MonoBehaviour {
 	private string prevChord;
 	private string curKey;
 	private string prevKey;
+	//private float curTime;
 
 
 
@@ -27,6 +29,10 @@ public class scr_AudioManager : MonoBehaviour {
 			Destroy(gameObject);
 			return;
 		}
+
+		//Start Loading sounds
+		//LoadSounds();
+
 		//Might not need - this is so sound doesn't stop between scenes
 		//DontDestroyOnLoad(gameObject);
 
@@ -40,6 +46,15 @@ public class scr_AudioManager : MonoBehaviour {
 		}
 	}
 
+
+
+	// public void LoadSounds(){
+  //
+	// 	//CMajorPent
+	// 	//sounds[0].source = "sound/SoftSynthHorn/C4";
+	// 	//Debug.Log(sounds[0].name);// = "C4";
+	// }
+
 	public void Play(string name){
 		Sound s = Array.Find(sounds, sound => sound.name == name);
 		if(s == null){
@@ -47,6 +62,8 @@ public class scr_AudioManager : MonoBehaviour {
 			return;
 		}
 
+		//Debug.Log(Time.time - curTime);
 		s.source.Play();
+		//curTime = Time.time;
 	}
 }

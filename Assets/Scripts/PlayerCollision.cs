@@ -9,14 +9,14 @@ public class PlayerCollision : MonoBehaviour {
       audioManager = FindObjectOfType<scr_AudioManager>();
     }
 
-    
+
     void OnCollisionEnter(Collision collisionInfo)
     {
         // Debug.Log(collisionInfo.collider.name);
 
         if (collisionInfo.collider.tag == "Obstacle")
         {
-            Debug.Log("We hit an obstacle");
+            //Debug.Log("We hit an obstacle");
             movement.enabled = false;
             FindObjectOfType<GameManager>().EndGame();
         }
