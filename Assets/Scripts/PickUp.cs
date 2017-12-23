@@ -27,9 +27,10 @@ public class PickUp : MonoBehaviour {
 		//For Changing Materials
 		rend = this.GetComponent<Renderer>();
 		rend.enabled = true;
-		rend.sharedMaterial = material[1];
+		//rend.sharedMaterial = material[3];
 		//End of changing material stuff
-
+		//Debug.Log("Start" + this.gameObject);
+		//interval = 1;
 
 
 	}
@@ -58,12 +59,16 @@ public class PickUp : MonoBehaviour {
 	}
 
 	public void SetMaterial(){
-		//rend.sharedMaterial = material[interval];
+		Debug.Log("SetMat" + this.gameObject);
+		rend = this.GetComponent<Renderer>();
+		rend.enabled = true;
+		rend.sharedMaterial = material[interval];
 	}
 
 	public void SetInterval(int note){
 		interval = note;
-		SetMaterial();
+		Debug.Log("setInterval");
+		this.SetMaterial();
 	}
 
 	public void setIsChord(bool chord){

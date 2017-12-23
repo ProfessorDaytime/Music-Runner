@@ -68,7 +68,7 @@ public class scr_Spawn : MonoBehaviour {
 
     PickUp myPickUp = pickUpClone.GetComponent<PickUp>();
 
-    myPickUp.SetInterval(UnityEngine.Random.Range(1,6));
+    myPickUp.SetInterval(UnityEngine.Random.Range(1,7));
 
 
     //pickUpClone.interval = UnityEngine.Random.Range(0,6);
@@ -170,7 +170,7 @@ public class scr_Spawn : MonoBehaviour {
           if(line != null){
             //Do whatever you need to do with the text line - it is a string now
             lvlData.Add(line);
-            Debug.Log(line);
+            // Debug.Log(line);
           }
           else{
             Debug.Log("Line was Empty Somehow?");
