@@ -59,10 +59,11 @@ public class PickUp : MonoBehaviour {
 	}
 
 	public void SetMaterial(){
-		Debug.Log("SetMat" + this.gameObject);
+
 		rend = this.GetComponent<Renderer>();
 		rend.enabled = true;
-		rend.sharedMaterial = material[interval];
+		rend.sharedMaterial = material[interval - 1];
+		Debug.Log(interval);
 	}
 
 	public void SetInterval(int note){

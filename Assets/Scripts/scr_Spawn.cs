@@ -37,7 +37,7 @@ public class scr_Spawn : MonoBehaviour {
 
 		//Ground Genearation
     lastPos = firstObject.transform.position;
-    if(Load("Assets/Scripts/dat_LvlTest.txt")){
+    if(Load("Assets/Scripts/dat_LvlTest2.txt")){
       Debug.Log("Loaded LVLTEST");
       for (int i = 0; i <= horizon; i++){
         Spawning();
@@ -62,13 +62,22 @@ public class scr_Spawn : MonoBehaviour {
     _obstacle.transform.position = lastPos + new Vector3(xPos, 3.25f + height, lengthinZaxis + zOffset);
   }
 
-  private void SpawnPickUp(float xPos, float zOffset){
+  private void SpawnPickUp(float xPos, float zOffset, int interval){
     GameObject pickUpClone = Instantiate (pickUp) as GameObject;
     pickUpClone.transform.position = lastPos + new Vector3(xPos, 1, lengthinZaxis + zOffset);
 
     PickUp myPickUp = pickUpClone.GetComponent<PickUp>();
 
-    myPickUp.SetInterval(UnityEngine.Random.Range(1,7));
+
+    //myPickUp.SetInterval(7);
+    if(interval == 0){
+      myPickUp.SetInterval(UnityEngine.Random.Range(1,8));
+    }
+    else{
+      myPickUp.SetInterval(interval);
+    }
+
+
 
 
     //pickUpClone.interval = UnityEngine.Random.Range(0,6);
@@ -83,18 +92,31 @@ public class scr_Spawn : MonoBehaviour {
 
     string lastGen = "no";
 
+
     //Obstacle and Note Spawning
 		if(lvlData.Count != 0){
       int curXPos = -50;
       for(int i = 0; i < 100; i++){
 
-        if(lvlData[0].Substring(i,1) == "1"){
+        string gen = lvlData[0].Substring(i,1);
+        int val = -1;
+        int.TryParse(gen, out val);
+
+        if(gen == "w"){
+          //Debug.Log("WWWWW");
           SpawnObstacle(curXPos,0);
           lastGen = "obstacle";
         }
-        else if(lvlData[0].Substring(i,1) == "2"){
-          SpawnPickUp(curXPos,0);
+        else if(val > 0 && val < 8){
+          SpawnPickUp(curXPos, 0, val);
           lastGen = "pickUp";
+        }
+        else if(val == 9){
+          SpawnPickUp(curXPos, 0, 0);
+          lastGen = "pickUp";
+        }
+        else if(gen == "r"){
+          lastGen = RandomGen(lastGen, curXPos);
         }
         else{
           lastGen = "no";
@@ -106,45 +128,40 @@ public class scr_Spawn : MonoBehaviour {
     }
     else{
       for (int i = -49; i < 50; i++){
-        int chooseTens = UnityEngine.Random.Range(0, 10);
-        int chooseFives = UnityEngine.Random.Range(0,10);
-
-
-        //Spawns on the 10s places
-        if(chooseTens < 4){//Spawn pickups
-          if(lastGen != "pickUp"){
-            SpawnPickUp(i,0);
-            lastGen = "pickUp";
-          }
-          else{
-            lastGen = "no";
-          }
-
-        }
-        else if(chooseTens < 7 && obOn){//Spawn Obstacles
-          SpawnObstacle(i,0);
-          lastGen = "obstacle";
-        }
-        else{
-          lastGen = "no";
-        }
-
-
-        //Spawns Obstacles on 5s
-        // if(chooseFives < 0.5f){
-        //   SpawnObstacle(i,5);
-        //   lastGen = "obstacle";
-        // }
-        // else if (chooseFives < 5f){
-        //   SpawnPickUp(i,5);
-        //   lastGen = "pickUp";
-        // }
-
+        lastGen = RandomGen(lastGen, i);
       }
     }
 
     lastPos = _ground.transform.position;
     obOn = !obOn;
+  }
+
+  private string RandomGen(string lg, int xPos){
+    string lastGen = lg;
+
+    int chooseTens = UnityEngine.Random.Range(0, 10);
+    int chooseFives = UnityEngine.Random.Range(0,10);
+
+    //Spawns on the 10s places
+    if(chooseTens < 4){//Spawn pickups
+      if(lastGen != "pickUp"){
+        SpawnPickUp(xPos,0, UnityEngine.Random.Range(1,8));
+        lastGen = "pickUp";
+      }
+      else{
+        lastGen = "no";
+      }
+
+    }
+    else if(chooseTens < 7 && obOn){//Spawn Obstacles
+      SpawnObstacle(xPos,0);
+      lastGen = "obstacle";
+    }
+    else{
+      lastGen = "no";
+    }
+
+    return lastGen;
   }
 
   private bool Load(string fileName){

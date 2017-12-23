@@ -95,9 +95,9 @@ public class PlayerMovement : MonoBehaviour {
 
 		transform.Translate (moveSpeed *1.5f * Input.GetAxis ("Horizontal") * Time.deltaTime, 0f, moveSpeed * Time.deltaTime);
 
-    if(transform.position.y != -0.45f){
-      transform.position = new Vector3(transform.position.x, -0.45f, transform.position.z);
-    }
+    // if(transform.position.y != -0.45f){
+    //   transform.position = new Vector3(transform.position.x, -0.45f, transform.position.z);
+    // }
 
 
     if(transform.rotation != Quaternion.identity){
