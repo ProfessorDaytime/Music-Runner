@@ -16,13 +16,13 @@ public class scr_AudioManager : MonoBehaviour {
 	private string prevChord;
 	private string curKey;
 	private string prevKey;
+	private bool pentatonicMode;
 	//private float curTime;
 
 
 
 	// Use this for initialization
 	void Awake () {
-
 		if(instance == null)
 			instance = this;
 		else{
@@ -30,22 +30,24 @@ public class scr_AudioManager : MonoBehaviour {
 			return;
 		}
 
-		//Start Loading sounds
-		//LoadSounds();
-
-		//Might not need - this is so sound doesn't stop between scenes
-		//DontDestroyOnLoad(gameObject);
-
 		foreach (Sound s in sounds){
 			s.source = gameObject.AddComponent<AudioSource>();
 			s.source.clip = s.clip;
 
 			s.source.volume = s.volume;
 			s.source.pitch = s.pitch;
-
 		}
+
+
+		setChord("Am");
+
 	}
 
+
+	public void setChord(string chord){
+
+		curChord = chord;
+	}
 
 
 	// public void LoadSounds(){

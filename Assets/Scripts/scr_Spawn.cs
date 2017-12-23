@@ -25,8 +25,9 @@ public class scr_Spawn : MonoBehaviour {
   [SerializeField]
   Transform firstObject;
 
-	[SerializeField]
-  GameObject pickUp;
+	// [SerializeField]
+  // GameObject pickUp;
+  public Pickup pickUp;
 
   [SerializeField]
   GameObject obstacle;
@@ -62,8 +63,11 @@ public class scr_Spawn : MonoBehaviour {
   }
 
   private void SpawnPickUp(float xPos, float zOffset){
-    GameObject _pickUp = Instantiate (pickUp) as GameObject;
-    _pickUp.transform.position = lastPos + new Vector3(xPos, 1, lengthinZaxis + zOffset);
+    GameObject pickUpClone = Instantiate (pickUp) as GameObject;
+    pickUpClone.transform.position = lastPos + new Vector3(xPos, 1, lengthinZaxis + zOffset);
+    pickUpClone.interval = UnityEngine.Random.Range(0,6);
+    // scr_PickUp scr = (scr_PickUp) _pickUp.GetComponent(typeof(scr_PickUp));
+    // scr.SetInterval(UnityEngine.Random.Range(0,6));
   }
 
 	//Seth's Ground Spawning
@@ -141,20 +145,20 @@ public class scr_Spawn : MonoBehaviour {
     //Handle any problems that might arise when reading the Text
     try{
       string line;
-      Debug.Log("Created line");
+
       //Create a new StreamReader, tell it which file to read and what encoding the file was saved as
       StreamReader theReader = new StreamReader(fileName, Encoding.Default);
-      Debug.Log("BUTTS");
+
       //Immediately clean up the reader after this block of code is done.
       //You generally use the 'using' statement for potentially memory-intensive objects
       //--instead of relying on garbage collection.
       //(DO NOT CONFUSE THIS WITH THE USING DIRECTIVE FOR NAMESPACE AT THE BEGINNING OF A CLASS)
-      Debug.Log("Started theReader");
+
       using (theReader){
-        Debug.Log("Using theReader");
+
         //while there're lines left in the text file, do this:
         do{
-          Debug.Log("Do");
+
           line = theReader.ReadLine();
 
           if(line != null){
@@ -168,11 +172,11 @@ public class scr_Spawn : MonoBehaviour {
         }
         while(line != null);
         //Done reading, close the reader and return true to broadcast success
-        Debug.Log("BEPIS" + line);
+
         theReader.Close();
         return true;
       }
-      Debug.Log("Skipped over useful code");
+
     }
     catch (Exception e){
       Debug.Log("Catch");
