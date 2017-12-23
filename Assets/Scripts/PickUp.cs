@@ -25,13 +25,13 @@ public class PickUp : MonoBehaviour {
 		audioManager = FindObjectOfType<scr_AudioManager>();
 
 		//For Changing Materials
-		rend = GetComponent<Renderer>();
+		rend = this.GetComponent<Renderer>();
 		rend.enabled = true;
-		rend.sharedMaterial = material[0];
+		rend.sharedMaterial = material[1];
 		//End of changing material stuff
 
-		interval = 1;
-		SetMaterial();
+
+
 	}
 
 	// Update is called once per frame
@@ -58,11 +58,12 @@ public class PickUp : MonoBehaviour {
 	}
 
 	public void SetMaterial(){
-		rend.sharedMaterial = material[interval];
+		//rend.sharedMaterial = material[interval];
 	}
 
 	public void SetInterval(int note){
-
+		interval = note;
+		SetMaterial();
 	}
 
 	public void setIsChord(bool chord){

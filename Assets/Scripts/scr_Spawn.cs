@@ -25,9 +25,9 @@ public class scr_Spawn : MonoBehaviour {
   [SerializeField]
   Transform firstObject;
 
-	// [SerializeField]
-  // GameObject pickUp;
-  public Pickup pickUp;
+	[SerializeField]
+  GameObject pickUp;
+  //public PickUp pickUp;
 
   [SerializeField]
   GameObject obstacle;
@@ -65,7 +65,13 @@ public class scr_Spawn : MonoBehaviour {
   private void SpawnPickUp(float xPos, float zOffset){
     GameObject pickUpClone = Instantiate (pickUp) as GameObject;
     pickUpClone.transform.position = lastPos + new Vector3(xPos, 1, lengthinZaxis + zOffset);
-    pickUpClone.interval = UnityEngine.Random.Range(0,6);
+
+    PickUp myPickUp = pickUpClone.GetComponent<PickUp>();
+
+    myPickUp.SetInterval(UnityEngine.Random.Range(1,6));
+
+
+    //pickUpClone.interval = UnityEngine.Random.Range(0,6);
     // scr_PickUp scr = (scr_PickUp) _pickUp.GetComponent(typeof(scr_PickUp));
     // scr.SetInterval(UnityEngine.Random.Range(0,6));
   }
