@@ -93,21 +93,37 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
 
 
-		transform.Translate (moveSpeed *1.5f * Input.GetAxis ("Horizontal") * Time.deltaTime, 0f, moveSpeed * Time.deltaTime);
 
+
+    if(Input.GetAxis("Vertical") < - 0.5f ){
+      transform.eulerAngles = new Vector3(0,90,0);
+      transform.Translate ( -1 * moveSpeed * Time.deltaTime, 0f, 0f);
+
+    }
+    else{
+      transform.eulerAngles = new Vector3(0,0,0);
+      transform.Translate (moveSpeed *1.5f * Input.GetAxis ("Horizontal") * Time.deltaTime, 0f, moveSpeed * Time.deltaTime);
+
+    }
     // if(transform.position.y != -0.45f){
     //   transform.position = new Vector3(transform.position.x, -0.45f, transform.position.z);
     // }
 
 
-    if(transform.rotation != Quaternion.identity){
-      transform.rotation = Quaternion.identity;
-    }
+    // if(transform.rotation != Quaternion.identity){
+    //   transform.rotation = Quaternion.identity;
+    // }
 
-		//spawns new platforms if you get close to the horizon
-		// if(lastPos.z - transform.position.z < (horizon * lengthinZaxis)){
-		// 	Spawning();
-		// }
+    // Debug.Log("zpos" + transform.position.z % 10);
+    // if(transform.position.z % 10f < 0.1f){
+    //   PlayDrums();
+    // } //Come Back To This Shit Later
 	}
+
+  private void PlayDrums(){
+    scr_AudioManager audioManager;
+    audioManager = FindObjectOfType<scr_AudioManager>();
+    audioManager.Play("Kick1");
+  }
 
 }

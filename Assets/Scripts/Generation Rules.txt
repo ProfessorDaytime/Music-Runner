@@ -1,0 +1,39 @@
+Rules to generation.  right now I am just using 0-9 and letters
+
+0 = Empty Space
+1 = Note at interval equal to itself
+2 = Note at interval equal to itself
+3 = Note at interval equal to itself
+4 = Note at interval equal to itself
+5 = Note at interval equal to itself
+6 = Note at interval equal to itself
+7 = Note at interval equal to itself
+8 = Not currently Assigned
+9 = Note at random interval
+
+//A = Major Chord at Base Scale Note
+//a = Minor Chord at Base Scale Note
+//B = Major Chord at 2 Scale Note
+//b = Minor Chord at 2 Scale Note
+//C = Major Chord at 3 Scale Note
+//c = Minor Chord at 3 Scale Note
+//D = Major Chord at 4 Scale Note
+//d = Minor Chord at 4 Scale Note
+//E = Major Chord at 5 Scale Note
+//e = Minor Chord at 5 Scale Note
+//F = Major Chord at 6 Scale Note
+//f = Minor Chord at 6 Scale Note
+//G = Major Chord at 7 Scale Note
+//g = Minor Chord at 7 Scale Note
+
+
+a = Chord at Base Scale Note
+b = Chord at 2 Scale Note
+c = Chord at 3 Scale Note
+d = Chord at 4 Scale Note
+e = Chord at 5 Scale Note
+f = Chord at 6 Scale Note
+g = Chord at 7 Scale Note
+
+r = random generation note, chord, obstacle, empty...
+w = wall or obstacle// this will probably expand in the future

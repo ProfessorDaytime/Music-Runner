@@ -38,7 +38,7 @@ public class scr_Spawn : MonoBehaviour {
 		//Ground Genearation
     lastPos = firstObject.transform.position;
     if(Load("Assets/Scripts/dat_LvlTest2.txt")){
-      Debug.Log("Loaded LVLTEST");
+      // Debug.Log("Loaded LVLTEST");
       for (int i = 0; i <= horizon; i++){
         Spawning();
       }
@@ -62,12 +62,12 @@ public class scr_Spawn : MonoBehaviour {
     _obstacle.transform.position = lastPos + new Vector3(xPos, 3.25f + height, lengthinZaxis + zOffset);
   }
 
-  private void SpawnPickUp(float xPos, float zOffset, int interval){
+  private void SpawnPickUp(float xPos, float zOffset, int interval, bool isChord){
     GameObject pickUpClone = Instantiate (pickUp) as GameObject;
     pickUpClone.transform.position = lastPos + new Vector3(xPos, 1, lengthinZaxis + zOffset);
 
     PickUp myPickUp = pickUpClone.GetComponent<PickUp>();
-
+    myPickUp.setIsChord(isChord);
 
     //myPickUp.SetInterval(7);
     if(interval == 0){
@@ -78,11 +78,6 @@ public class scr_Spawn : MonoBehaviour {
     }
 
 
-
-
-    //pickUpClone.interval = UnityEngine.Random.Range(0,6);
-    // scr_PickUp scr = (scr_PickUp) _pickUp.GetComponent(typeof(scr_PickUp));
-    // scr.SetInterval(UnityEngine.Random.Range(0,6));
   }
 
 	//Seth's Ground Spawning
@@ -108,12 +103,43 @@ public class scr_Spawn : MonoBehaviour {
           lastGen = "obstacle";
         }
         else if(val > 0 && val < 8){
-          SpawnPickUp(curXPos, 0, val);
+          SpawnPickUp(curXPos, 0, val, false);
           lastGen = "pickUp";
         }
         else if(val == 9){
-          SpawnPickUp(curXPos, 0, 0);
+          SpawnPickUp(curXPos, 0, 0, false);
           lastGen = "pickUp";
+        }
+        else if (gen == "a"){
+          SpawnPickUp(curXPos, 0, 1, true);
+          lastGen = "pickUp";
+        }
+        else if (gen == "b"){
+          SpawnPickUp(curXPos, 0, 2, true);
+          lastGen = "pickUp";
+        }
+        else if (gen == "c"){
+          SpawnPickUp(curXPos, 0, 3, true);
+          lastGen = "pickUp";
+        }
+        else if (gen == "d"){
+          SpawnPickUp(curXPos, 0, 4, true);
+          lastGen = "pickUp";
+        }
+        else if (gen == "e"){
+          SpawnPickUp(curXPos, 0, 5, true);
+          lastGen = "pickUp";
+
+        }
+        else if (gen == "f"){
+          SpawnPickUp(curXPos, 0, 6, true);
+          lastGen = "pickUp";
+
+        }
+        else if (gen == "g"){
+          SpawnPickUp(curXPos, 0, 7, true);
+          lastGen = "pickUp";
+
         }
         else if(gen == "r"){
           lastGen = RandomGen(lastGen, curXPos);
@@ -145,7 +171,7 @@ public class scr_Spawn : MonoBehaviour {
     //Spawns on the 10s places
     if(chooseTens < 4){//Spawn pickups
       if(lastGen != "pickUp"){
-        SpawnPickUp(xPos,0, UnityEngine.Random.Range(1,8));
+        SpawnPickUp(xPos,0, UnityEngine.Random.Range(1,8), false);
         lastGen = "pickUp";
       }
       else{
@@ -190,7 +216,7 @@ public class scr_Spawn : MonoBehaviour {
             // Debug.Log(line);
           }
           else{
-            Debug.Log("Line was Empty Somehow?");
+            // Debug.Log("Line was Empty Somehow?");
           }
         }
         while(line != null);
