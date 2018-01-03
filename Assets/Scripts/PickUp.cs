@@ -5,17 +5,18 @@ using UnityEngine;
 public class PickUp : MonoBehaviour {
 
 
-	private string type;
-	private string curNote;
-	private bool isChord;
-	private string chordQuality; //ex: maj, min, dim, maj7, min7
+	private string type;								//I Don't Think this is used
+	private string curNote;							//I Don't Think this is used
+	private bool isChord; //Determines if the pickup is a chord or not
+	private string subScaleQuality; //ex: maj, min, dim, maj7, min7
 
-	private List<string> possibleNotes = new List<string>();
+	private List<string> possibleNotes = new List<string>();		//May Not Use This
 
 
-	private scr_AudioManager audioManager;
+	private scr_AudioManager audioManager;		//the instance of the audioManager
 
-	public int interval;
+	public int interval;		//The interval from the chord base
+
 	//To Change Materials
 	public Material[] material;
 	private Renderer rend;
@@ -23,36 +24,33 @@ public class PickUp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		type = "TEST";
 
-		audioManager = FindObjectOfType<scr_AudioManager>();
+		audioManager = FindObjectOfType<scr_AudioManager>(); //Sets the audioManager
 
 		//For Changing Materials
 		rend = this.GetComponent<Renderer>();
 		rend.enabled = true;
-		//rend.sharedMaterial = material[3];
 		//End of changing material stuff
 
-		//setIsChord(true);
-		// SetChordQuality("min");
-		FindChordQuality();
+
 
 	}
 
 	// Update is called once per frame
-	void Update () {
-
-	}
+	// void Update () {
+  //
+	// }
 
 
 
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == "Player"){
-			string note = ChooseNote();
+			string note = audioManager.GetNoteFromSubScale(interval - 1);
 
 			audioManager.Play(note);
 
 			if(isChord){
+				FindSubScaleQuality();//finds what kind of chord it would be dep3nding on the current chord and interval
 				// Debug.Log(note);
 				string third;
 				string fifth;
@@ -62,21 +60,26 @@ public class PickUp : MonoBehaviour {
 				fifth = audioManager.GetNoteAtIndex(i + 7);
 				third = audioManager.GetNoteAtIndex(i + 3); // default to minor chord
 
-				if(chordQuality == "maj"){
+				if(subScaleQuality == "ion" || subScaleQuality == "lyd" || subScaleQuality == "mix"){
 					third = audioManager.GetNoteAtIndex(i + 4);
 					audioManager.Play(third);
 				}
-				else if(chordQuality == "dim"){
+				else if(subScaleQuality == "loc"){
 					third = audioManager.GetNoteAtIndex(i + 3);
 					fifth = audioManager.GetNoteAtIndex(i + 6);
+					//subScaleQuality = "min";
 				}
 
 				//Debug.Log("base: " + note);
 				//Debug.Log("third: " + third);
 				//Debug.Log("fifth: " + fifth);
+
+				audioManager.SetScaleBase(note);
+				audioManager.SetSubScaleQuality(subScaleQuality);
+				audioManager.SetSubScale();
+				// audioManager.LogSubScale();
 				audioManager.Play(third);
 				audioManager.Play(fifth);
-
 			}
 
 
@@ -87,11 +90,7 @@ public class PickUp : MonoBehaviour {
 
 
 	string ChooseNote(){
-		//string[] notes = {"A5", "B5", "C6", "D6", "E6", "F6", "G6"};
-
-		// notes = new Array["A5", "B5", "C6", "D6", "E6", "F6", "G6"];
-    //
-		for (int i = 0; i < audioManager.)
+		// for (int i = 0; i < audioManager.)
 		possibleNotes.Add("D5");
 		possibleNotes.Add("E5");
 		possibleNotes.Add("F5");
@@ -124,37 +123,38 @@ public class PickUp : MonoBehaviour {
 		// this.SetMaterial();
 	}
 
-	public void FindChordQuality(){
+	public void FindSubScaleQuality(){
 		string scaleQual = audioManager.GetScaleQuality();
-
-		if(scaleQual == "min"){
+		Debug.Log("FindSubScaleQuality: scaleQual: " + scaleQual);
+		if(scaleQual == "aeo"){
 			if(interval == 1){
-				SetChordQuality("min");
+				SetSubScaleQuality("aeo");
 			}
 			else if(interval == 2){
-				SetChordQuality("dim");
+				SetSubScaleQuality("loc");
 			}
 			else if(interval == 3){
-				SetChordQuality("maj");
+				SetSubScaleQuality("ion");
 			}
 			else if(interval == 4){
-				SetChordQuality("min");
+				SetSubScaleQuality("dor");
 			}
 			else if(interval == 5){
-				SetChordQuality("min");
+				SetSubScaleQuality("phr");
 			}
 			else if(interval == 6){
-				SetChordQuality("maj");
+				SetSubScaleQuality("lyd");
 			}
 			else if(interval == 7){
-				SetChordQuality("maj");
+				SetSubScaleQuality("mix");
 			}
 		}
 	}
 
 
-	public void SetChordQuality(string qual){
-		chordQuality = qual;
+	public void SetSubScaleQuality(string qual){
+		subScaleQuality = qual;
+		Debug.Log("SetSubScaleQuality:" + qual);
 	}
 
 
