@@ -27,9 +27,12 @@ public class scr_AudioManager : MonoBehaviour {
 
 
 
-
-	// Use this for initialization
+	//-------------------------------
+	//Use this for initialization
+	//-------------------------------
 	void Awake () {
+
+		//
 		if(instance == null)
 			instance = this;
 		else{
